@@ -1,6 +1,6 @@
 Certainly! Below is the README content in GitHub README format:
 
-```markdown
+
 # Customer Segmentation Project
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
