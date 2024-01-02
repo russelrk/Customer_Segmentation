@@ -40,7 +40,11 @@ def preprocess_and_clean_data(df):
         df = df.drop_duplicates()
 
         # Handle missing values (you can customize this based on your data)
-        df = df.fillna(df.mean())  # Fill missing values with mean
+        df = df.fillna(df.mean(numeric_only=True))  # Fill missing values with mean
+
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                df[col] = df[col].fillna('Unknown')
 
         # Remove outliers (you can customize this based on your data)
         # Example: Remove rows where a specific feature is beyond a certain threshold
