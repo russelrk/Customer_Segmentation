@@ -76,9 +76,6 @@ if __name__ == "__main__":
         # Load the dataset
         df = load_data("sample_data/Train.csv")
 
-        # clean and preprocess the data
-        df_clean_preprocessed = preprocess_and_clean_data(df_train.copy())
-
         # Perform exploratory data analysis (EDA)
         explore_data(df_clean_preprocessed)
     except Exception as e:
