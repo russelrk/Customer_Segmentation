@@ -1,5 +1,6 @@
 import pandas as pd
 import logging
+from .load_data import load_data
 
 # Configure logging
 logging.basicConfig(filename='data_preprocessing.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
