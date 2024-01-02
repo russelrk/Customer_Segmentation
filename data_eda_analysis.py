@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from .data_preprocess import load_data, preprocess_and_clean_data
+from .load_data import load_data
 
 import logging
 # Configure logging
