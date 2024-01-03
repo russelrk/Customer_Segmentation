@@ -54,7 +54,7 @@ cd customer-segmentation
 
 ## Data
 
-The data used for this project can be found in the `data/` directory. Describe the dataset briefly, including its source and any preprocessing steps applied.
+The data used for this project can be found in the `data/` directory. Data is donwloaded from kaggle for the purpose customer segmentation. 
 
 ## Analysis
 
