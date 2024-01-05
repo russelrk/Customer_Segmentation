@@ -1,6 +1,7 @@
 import pandas as pd
 import logging
 from .load_data import load_data
+from sklearn.preprocessing import LabelEncoder
 
 # Configure logging
 logging.basicConfig(filename='data_preprocessing.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -19,12 +20,19 @@ def preprocess_and_clean_data(df):
         # Remove duplicates if any
         df = df.drop_duplicates()
 
-        # Handle missing values (you can customize this based on your data)
-        df = df.fillna(df.mean(numeric_only=True))  # Fill missing values with mean
-
         for col in df.columns:
             if df[col].dtype == 'object':
-                df[col] = df[col].fillna('Unknown')
+                df[col] = df[col].fillna("unknown")
+            else:
+                df[col] = df[col].mean()
+
+        # Create a label encoder object
+        le = LabelEncoder()
+
+        # Apply the label encoder to the DataFrame
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                df[col] = le.fit_transform(df[col])
 
         # Remove outliers (you can customize this based on your data)
         # Example: Remove rows where a specific feature is beyond a certain threshold
