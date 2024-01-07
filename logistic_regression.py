@@ -12,11 +12,10 @@ from .data_preprocess import preprocess_and_clean_data
 
 # Load your data
 # Preprocess and clean the data
-df = preprocess_and_clean_data(load_data("sample_data/Train.csv")).drop(columns='ID')
+df = preprocess_and_clean_data(load_data("sample_data/Train.csv"))
 
-# Assuming df is your DataFrame
-y = df.pop('Segmentation')
-X = df
+# Assuming df is your DataFrame, split the data into features and labels
+ID, y, X = df.pop('ID'), df.pop('Segmentation'), df
 
 # Preprocessing for numerical data
 numerical_transformer = Pipeline(steps=[
