@@ -6,7 +6,7 @@ from sklearn.preprocessing import LabelEncoder
 # Configure logging
 logging.basicConfig(filename='data_preprocessing.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def preprocess_and_clean_data(df):
+def preprocess_and_clean_data(df, standarize=True):
     """
     Preprocess and clean a DataFrame with 10 features and 8000 individuals.
 
@@ -25,6 +25,8 @@ def preprocess_and_clean_data(df):
                 df[col] = df[col].fillna("unknown")
             else:
                 df[col] = df[col].mean()
+                if standarize:
+                    df[col] = scaler.fit_transform(df[col].values.reshape(-1, 1))
 
         # Create a label encoder object
         le = LabelEncoder()
@@ -33,6 +35,8 @@ def preprocess_and_clean_data(df):
         for col in df.columns:
             if df[col].dtype == 'object':
                 df[col] = le.fit_transform(df[col])
+
+        
 
         # Remove outliers (you can customize this based on your data)
         # Example: Remove rows where a specific feature is beyond a certain threshold
