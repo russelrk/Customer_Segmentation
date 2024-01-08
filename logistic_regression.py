@@ -54,11 +54,13 @@ def train_logistic_regression_model(data_path):
     report = classification_report(y_test, preds)
     return report
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Train a logistic regression model.')
-    parser.add_argument('data_path', type=str, help='Path to the data file (e.g., sample_data/Train.csv)')
-    args = parser.parse_args()
+# Remove the main block, and leave only the function definition
+
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser(description='Train a logistic regression model.')
+#     parser.add_argument('data_path', type=str, help='Path to the data file (e.g., sample_data/Train.csv)')
+#     args = parser.parse_args()
     
-    data_path = args.data_path
-    classification_report_result = train_logistic_regression_model(data_path)
-    print(classification_report_result)
+#     data_path = args.data_path
+#     classification_report_result = train_logistic_regression_model(data_path)
+#     print(classification_report_result)
