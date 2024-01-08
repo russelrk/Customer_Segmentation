@@ -1,8 +1,8 @@
 import argparse
 from load_data import load_data
 from data_preprocess import preprocess_and_clean_data
-from train_logistic_regression import train_logistic_regression_model
-from explore_data import explore_data
+from logistic_regression import train_logistic_regression_model
+from eda_analysis import explore_data
 
 def main(data_path):
     # Load your data
