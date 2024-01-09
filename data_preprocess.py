@@ -1,14 +1,60 @@
 import pandas as pd
 import logging
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandardScaler  # Import the StandardScaler
+import sys
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 # Configure logging
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def fill_missing_values(df, col):
+    """
+    Fill missing values in a column based on its data type.
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the data.
+    col (str): The column name in the DataFrame.
+
+    Returns:
+    pd.Series: A pandas Series with missing values filled.
+    """
+    if df[col].dtype == 'object':
+        return df[col].fillna("unknown")
+    else:
+        return df[col].fillna(df[col].mean())
+
+def standardize_column(df, col, scaler):
+    """
+    Standardize a numerical column using StandardScaler.
+    
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the data.
+    col (str): The column name to be standardized.
+    scaler (StandardScaler): The StandardScaler instance to use.
+
+    Returns:
+    pd.Series: A pandas Series with standardized values.
+    """
+    return scaler.fit_transform(df[col].values.reshape(-1, 1))
+
+def encode_categorical_columns(df):
+    """
+    Encode categorical columns using LabelEncoder.
+
+    Parameters:
+    df (pd.DataFrame): The DataFrame containing the data.
+
+    Returns:
+    pd.DataFrame: The DataFrame with encoded categorical columns.
+    """
+    le = LabelEncoder()
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            df[col] = le.fit_transform(df[col])
+    return df
+
 def preprocess_and_clean_data(df, standardize=True):
     """
-    Preprocess and clean a DataFrame with 10 features and 8000 individuals.
+    Preprocess and clean a DataFrame with features and individuals.
 
     Parameters:
     df (pd.DataFrame): The input DataFrame containing the data.
@@ -18,34 +64,21 @@ def preprocess_and_clean_data(df, standardize=True):
     pd.DataFrame: A cleaned and preprocessed DataFrame.
     """
     try:
-        # Remove duplicates if any
         df = df.drop_duplicates()
 
-        # Initialize the scaler
-        scaler = StandardScaler()
+        if standardize:
+            scaler = StandardScaler()
 
         for col in df.columns:
-            if df[col].dtype == 'object':
-                df[col] = df[col].fillna("unknown")
-            else:
-                # Calculate the mean for non-object columns
-                df[col] = df[col].fillna(df[col].mean())
-                if standardize:
-                    # Standardize numerical columns
-                    df[col] = scaler.fit_transform(df[col].values.reshape(-1, 1))
+            df[col] = fill_missing_values(df, col)
+            if df[col].dtype != 'object' and standardize:
+                df[col] = standardize_column(df, col, scaler)
 
-        # Create a label encoder object
-        le = LabelEncoder()
-
-        # Apply the label encoder to the DataFrame for object columns
-        for col in df.columns:
-            if df[col].dtype == 'object':
-                df[col] = le.fit_transform(df[col])
-
-        # Other preprocessing steps can be added as needed
+        df = encode_categorical_columns(df)
 
         logging.info("Data preprocessing and cleaning completed.")
         return df
     except Exception as e:
         logging.error(f"An error occurred during data preprocessing and cleaning: {str(e)}")
-        raise Exception(f"An error occurred during data preprocessing and cleaning: {str(e)}")
+        raise
+
