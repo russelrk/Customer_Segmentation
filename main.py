@@ -13,6 +13,7 @@ def main(data_path: str, eda: bool = True, cl_report: bool = True) -> None:
     :param eda: Flag to perform EDA (Exploratory Data Analysis).
     :param cl_report: Flag to generate a classification report.
     """
+    
     # Load your data
     df = load_data(data_path)
     
