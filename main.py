@@ -51,3 +51,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=args.log_level.upper())
     
     main(args.data_path, args.eda, args.cl_report)
+
+
+"""
+Example of how to call this 
+
+python my_script.py --data_path /path/to/your/data.csv --eda --cl_report --log_level INFO
+"""
