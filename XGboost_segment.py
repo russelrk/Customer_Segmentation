@@ -51,4 +51,7 @@ def train_xgboost_model(data_path):
     preds = clf.predict(X_test)
 
     # Evaluate the model
-    report = classification_report(y
+    report = classification_report(y_test, preds)
+    return report
+
+# The argparse and main block have been removed as requested
